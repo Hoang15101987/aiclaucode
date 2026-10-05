@@ -418,7 +418,7 @@ function AgentHall({ query, industry, directInstall, setDirectInstall }: {
           ))}
         </div>
       )}
-      {selected && <AgentDetail agent={selected} onClose={() => setSelected(null)} />}
+      {selected && <AgentDetail agent={selected} directInstall={directInstall} setDirectInstall={setDirectInstall} onClose={() => setSelected(null)} />}
     </section>
   );
 }
