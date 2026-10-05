@@ -192,13 +192,9 @@ function Hero() {
         />
         {/* Lớp phủ tan biến phía trên để chữ nổi bật */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-background/85 via-background/40 to-transparent" />
-        <div className="absolute inset-x-0 top-0 flex flex-col items-center px-6 pt-6 text-center sm:pt-8">
-          <p className="font-script text-3xl text-primary drop-shadow-sm sm:text-4xl">Tuyển Nhân sự AI</p>
-          <h1 className="mt-1 font-display text-2xl font-black uppercase tracking-wide text-foreground drop-shadow-sm sm:text-4xl">
-            Quên ăn quên ngủ vì sếp
-          </h1>
-          <p className="mt-2 rounded-full bg-primary px-4 py-1 text-sm font-bold text-primary-foreground shadow-md sm:text-base">
-            Làm việc 24/7 · Chỉ từ 299K
+        <div className="absolute inset-x-0 bottom-0 flex justify-center pb-4 sm:pb-5">
+          <p className="rounded-full bg-primary px-5 py-1.5 font-display text-sm font-black uppercase tracking-wide text-primary-foreground shadow-lg sm:text-base">
+            Tuyển Nhân sự AI · Làm việc 24/7 · Chỉ từ 299K
           </p>
         </div>
       </div>
