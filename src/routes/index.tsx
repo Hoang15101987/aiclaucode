@@ -199,7 +199,7 @@ function Hero() {
         <img
           src={coverAsset.url}
           alt="Nhân Sự Agent – Quên Ăn Quên Ngủ Vì Sếp"
-          className="block max-h-[460px] w-full object-cover"
+          className="block w-full"
         />
         {/* Lớp phủ tan biến phía trên để chữ nổi bật */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-background/85 via-background/40 to-transparent" />
