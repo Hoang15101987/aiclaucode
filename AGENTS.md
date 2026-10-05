@@ -8,3 +8,8 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+<!-- ============= Project rules (append below) ============= -->
+
+- Landing page is a single client-side route (src/routes/index.tsx); agent catalog and industries are static data in that file — no backend until the user asks for orders/accounts.
+- Design tokens live in src/styles.css (oklch); fonts load via <link> in src/routes/__root.tsx, never @import in CSS.
