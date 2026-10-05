@@ -334,10 +334,10 @@ function AgentHall({ query, industry }: { query: string; industry: string | null
                 <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-background/85 px-3 py-1 text-xs font-semibold text-primary shadow-sm backdrop-blur">
                   <span className="h-2 w-2 rounded-full bg-gold" /> Sẵn sàng làm việc
                 </span>
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/85 via-background/55 to-transparent p-4 pt-12 backdrop-blur-md">
-                  <p className="text-xs font-semibold uppercase text-gold">{agent.role}</p>
-                  <h3 className="mt-0.5 font-display text-2xl font-bold text-foreground drop-shadow-sm">{agent.name}</h3>
-                  <p className="mt-0.5 text-sm font-medium text-primary">{agent.specialty}</p>
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-foreground/90 via-foreground/50 to-transparent p-4 pt-16">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gold">{agent.role}</p>
+                  <h3 className="mt-0.5 font-display text-2xl font-bold text-background drop-shadow-sm">{agent.name}</h3>
+                  <p className="mt-0.5 text-sm font-medium text-background/90">{agent.specialty}</p>
                 </div>
               </div>
               <div className="flex items-end justify-between gap-3 p-5">
