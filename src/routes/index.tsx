@@ -357,16 +357,26 @@ function AgentHall({ query, industry }: { query: string; industry: string | null
 }
 
 function ComboSection() {
-  const combos: { title: string; icon: LucideIcon; includes: string[] }[] = [
+  const combos: { title: string; icon: LucideIcon; includes: string[]; members: { name: string; image: string }[] }[] = [
     {
       title: "Combo Xây Kênh",
       icon: Sparkles,
       includes: ["Chiến lược nội dung 30 ngày", "Kịch bản video theo ngành", "Hình ảnh và video đồng bộ"],
+      members: [
+        { name: "An Nhiên AI", image: anNhienAsset.url },
+        { name: "Linh Chi AI", image: linhChiAsset.url },
+        { name: "Thảo Vy AI", image: thaoVyAsset.url },
+      ],
     },
     {
       title: "Combo Sale",
       icon: ShoppingBag,
       includes: ["Tư vấn và chốt đơn 24/7", "Chăm sóc khách hàng tự động", "Nhắn tin remarketing đúng lịch"],
+      members: [
+        { name: "Minh Anh AI", image: minhAnhAsset.url },
+        { name: "Hà My AI", image: haMyAsset.url },
+        { name: "Thanh Trúc AI", image: thanhTrucAsset.url },
+      ],
     },
   ];
   return (
