@@ -54,7 +54,7 @@ type AgentProfile = {
   specialty: string;
   description: string;
   features: string[];
-  price: string;
+  price: number;
   industries: string[];
   image: string;
 };
@@ -78,7 +78,7 @@ const AGENTS: AgentProfile[] = [
     specialty: "TikTok · YouTube · Facebook",
     description: "Lên chiến lược nội dung, viết kịch bản và vận hành lịch đăng đều đặn cho thương hiệu.",
     features: ["Lập lịch nội dung 30 ngày", "Viết kịch bản theo ngành", "Phân tích chủ đề tiềm năng"],
-    price: "999.000đ",
+    price: 999000,
     industries: ["Kinh doanh online", "Giáo dục", "Du lịch", "Sức khỏe"],
     image: anNhienAsset.url,
   },
@@ -89,7 +89,7 @@ const AGENTS: AgentProfile[] = [
     specialty: "Tư vấn · Chốt đơn · Theo sát khách",
     description: "Tư vấn và theo sát khách hàng suốt ngày đêm theo đúng kịch bản bán hàng của bạn.",
     features: ["Tư vấn đúng nhu cầu", "Chốt đơn tự động", "Tổng hợp khách tiềm năng"],
-    price: "999.000đ",
+    price: 999000,
     industries: ["Thời trang", "Mỹ phẩm", "Nhà hàng – F&B", "Kinh doanh online"],
     image: minhAnhAsset.url,
   },
@@ -100,7 +100,7 @@ const AGENTS: AgentProfile[] = [
     specialty: "Short video · Reels · TikTok",
     description: "Biến tư liệu thô thành video ngắn chỉn chu, có phụ đề, nhạc và nhịp dựng phù hợp.",
     features: ["Cắt ghép tự động", "Chèn phụ đề và nhạc", "Xuất đúng tỉ lệ nền tảng"],
-    price: "599.000đ",
+    price: 599000,
     industries: ["Du lịch", "Sức khỏe", "Kinh doanh online", "Giáo dục"],
     image: linhChiAsset.url,
   },
@@ -111,7 +111,7 @@ const AGENTS: AgentProfile[] = [
     specialty: "Landing page · Nội dung chuyển đổi",
     description: "Lên cấu trúc, viết nội dung và hoàn thiện trang bán hàng theo nhận diện thương hiệu.",
     features: ["Bố cục theo ngành hàng", "Nội dung bán hàng", "Nút gọi hành động và biểu mẫu"],
-    price: "799.000đ",
+    price: 799000,
     industries: ["Thời trang", "Mỹ phẩm", "Bất động sản", "Giáo dục"],
     image: giaHanAsset.url,
   },
@@ -122,7 +122,7 @@ const AGENTS: AgentProfile[] = [
     specialty: "Ảnh sản phẩm · Social · Thương hiệu",
     description: "Sản xuất bộ ảnh đồng bộ phong cách, phù hợp bán hàng và truyền thông đa nền tảng.",
     features: ["Ảnh sản phẩm thu hút", "Bộ ảnh social đồng bộ", "Tùy biến phong cách thương hiệu"],
-    price: "499.000đ",
+    price: 499000,
     industries: ["Mỹ phẩm", "Thời trang", "Nhà hàng – F&B"],
     image: thaoVyAsset.url,
   },
@@ -133,7 +133,7 @@ const AGENTS: AgentProfile[] = [
     specialty: "Video quảng cáo · Video giới thiệu",
     description: "Chuyển ý tưởng hoặc bài viết thành video quảng cáo hoàn chỉnh với giọng đọc tự nhiên.",
     features: ["Video từ ý tưởng", "Giọng đọc AI tiếng Việt", "Nhiều phiên bản thử nghiệm"],
-    price: "699.000đ",
+    price: 699000,
     industries: ["Mỹ phẩm", "Bất động sản", "Du lịch", "Kinh doanh online"],
     image: ngocMaiAsset.url,
   },
@@ -144,7 +144,7 @@ const AGENTS: AgentProfile[] = [
     specialty: "Giải đáp · Tra cứu · Chăm sóc sau bán",
     description: "Phản hồi khách nhanh chóng, tra cứu thông tin và chăm sóc sau bán như một nhân sự trực tuyến.",
     features: ["Phản hồi tức thì", "Tra cứu đơn và nhắc lịch", "Chăm sóc sau bán định kỳ"],
-    price: "299.000đ",
+    price: 299000,
     industries: ["Thời trang", "Nhà hàng – F&B", "Sức khỏe", "Bất động sản"],
     image: haMyAsset.url,
   },
@@ -155,11 +155,20 @@ const AGENTS: AgentProfile[] = [
     specialty: "Chăm sóc · Remarketing · Phân nhóm",
     description: "Gửi đúng nội dung đến đúng nhóm khách hàng theo lịch trình, đồng thời theo dõi phản hồi.",
     features: ["Phân nhóm khách tự động", "Gửi theo lịch trình", "Báo cáo tỉ lệ phản hồi"],
-    price: "299.000đ",
+    price: 299000,
     industries: ["Kinh doanh online", "Giáo dục", "Mỹ phẩm", "Sức khỏe"],
     image: thanhTrucAsset.url,
   },
 ];
+
+const PRICE_OPTIONS = [
+  { label: "Gói mua + Video hướng dẫn cài", desc: "Nhận gói Agent kèm video hướng dẫn tự cài đặt" },
+  { label: "Cài trực tiếp", desc: "Người cài Agent thiết lập trọn gói cho bạn, thêm 10%" },
+];
+
+function formatVnd(amount: number) {
+  return `${amount.toLocaleString("vi-VN")}đ`;
+}
 
 function Header() {
   return (
@@ -246,7 +255,12 @@ function SearchSection({ query, setQuery, industry, setIndustry }: {
   );
 }
 
-function AgentDetail({ agent, onClose }: { agent: AgentProfile; onClose: () => void }) {
+function AgentDetail({ agent, directInstall, setDirectInstall, onClose }: {
+  agent: AgentProfile;
+  directInstall: boolean;
+  setDirectInstall: (value: boolean) => void;
+  onClose: () => void;
+}) {
   return (
     <div
       className="fixed inset-0 z-[60] flex items-center justify-center bg-foreground/60 p-4 backdrop-blur-sm"
@@ -289,12 +303,34 @@ function AgentDetail({ agent, onClose }: { agent: AgentProfile; onClose: () => v
               <span className="inline-flex items-center gap-1 rounded-md border border-gold/60 bg-gold/10 px-2.5 py-1 text-xs font-semibold text-foreground"><Sparkles className="h-3.5 w-3.5 text-gold" />Claude</span>
             </div>
           </div>
-          <div className="mt-auto flex items-end justify-between gap-3 pt-6">
-            <div>
-              <p className="text-xs text-muted-foreground">Phí tuyển dụng</p>
-              <p className="font-display text-2xl font-black text-primary">{agent.price}</p>
+          <div className="mt-auto pt-6">
+            <p className="text-xs font-semibold text-muted-foreground">Chọn hình thức nhận</p>
+            <div className="mt-2 grid gap-2">
+              {PRICE_OPTIONS.map((option, index) => {
+                const active = (index === 1) === directInstall;
+                const optionPrice = index === 0 ? agent.price : Math.round(agent.price * 1.1);
+                return (
+                  <button
+                    key={option.label}
+                    type="button"
+                    onClick={() => setDirectInstall(index === 1)}
+                    className={`flex items-center justify-between gap-3 rounded-lg border p-3 text-left transition-colors ${active ? "border-primary bg-primary/5" : "border-border bg-background hover:border-primary/50"}`}
+                  >
+                    <span className="flex items-start gap-2">
+                      <span className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${active ? "border-primary bg-primary" : "border-border"}`}>
+                        {active && <Check className="h-3 w-3 text-primary-foreground" />}
+                      </span>
+                      <span>
+                        <span className="block text-sm font-bold text-foreground">{option.label}</span>
+                        <span className="block text-xs text-muted-foreground">{option.desc}</span>
+                      </span>
+                    </span>
+                    <span className="shrink-0 font-display text-lg font-black text-primary">{formatVnd(optionPrice)}</span>
+                  </button>
+                );
+              })}
             </div>
-            <Button className="rounded-full">Tuyển ngay<ArrowRight className="h-4 w-4" /></Button>
+            <Button className="mt-4 w-full rounded-full">Tuyển ngay<ArrowRight className="h-4 w-4" /></Button>
           </div>
         </div>
       </div>
@@ -302,7 +338,12 @@ function AgentDetail({ agent, onClose }: { agent: AgentProfile; onClose: () => v
   );
 }
 
-function AgentHall({ query, industry }: { query: string; industry: string | null }) {
+function AgentHall({ query, industry, directInstall, setDirectInstall }: {
+  query: string;
+  industry: string | null;
+  directInstall: boolean;
+  setDirectInstall: (value: boolean) => void;
+}) {
   const [selected, setSelected] = useState<AgentProfile | null>(null);
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -320,6 +361,23 @@ function AgentHall({ query, industry }: { query: string; industry: string | null
       <div className="text-center">
         <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">Tuyển nhân sự AI theo chuyên môn</h2>
         <p className="mx-auto mt-3 max-w-xl font-semibold text-primary">Bấm vào từng nhân sự để xem hồ sơ chi tiết</p>
+      </div>
+      <div className="mt-8 flex justify-center">
+        <div className="inline-flex flex-wrap justify-center gap-1 rounded-full border border-border bg-card p-1 shadow-sm" role="group" aria-label="So sánh hai mức giá">
+          {[
+            { label: "Gói mua + Video hướng dẫn cài", value: false },
+            { label: "Cài trực tiếp (+10%)", value: true },
+          ].map((option) => (
+            <button
+              key={option.label}
+              type="button"
+              onClick={() => setDirectInstall(option.value)}
+              className={`rounded-full px-4 py-1.5 text-xs font-bold transition-colors sm:text-sm ${directInstall === option.value ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
       </div>
       {filtered.length === 0 ? (
         <p className="mt-12 text-center text-muted-foreground">Không tìm thấy nhân sự phù hợp — hãy thử từ khóa khác.</p>
@@ -343,9 +401,16 @@ function AgentHall({ query, industry }: { query: string; industry: string | null
                 <p className="mt-0.5 text-sm font-medium text-primary">{agent.specialty}</p>
               </div>
               <div className="mt-auto flex items-end justify-between gap-3 px-5 pb-5 pt-4">
-                <div>
-                  <p className="text-xs text-muted-foreground">Phí tuyển dụng</p>
-                  <p className="font-display text-xl font-black text-primary">{agent.price}</p>
+                <div className="min-w-0">
+                  <p className="truncate text-xs font-semibold text-muted-foreground">
+                    {directInstall ? "Cài trực tiếp" : "Gói mua + Video hướng dẫn cài"}
+                  </p>
+                  <p className="font-display text-xl font-black text-primary">
+                    {formatVnd(directInstall ? Math.round(agent.price * 1.1) : agent.price)}
+                  </p>
+                  <p className="text-[11px] text-muted-foreground">
+                    {directInstall ? `Gói + video: ${formatVnd(agent.price)}` : `Cài trực tiếp: ${formatVnd(Math.round(agent.price * 1.1))}`}
+                  </p>
                 </div>
                 <Button size="sm" variant="outline" className="rounded-full">Xem hồ sơ<ArrowRight className="h-4 w-4" /></Button>
               </div>
@@ -353,7 +418,7 @@ function AgentHall({ query, industry }: { query: string; industry: string | null
           ))}
         </div>
       )}
-      {selected && <AgentDetail agent={selected} onClose={() => setSelected(null)} />}
+      {selected && <AgentDetail agent={selected} directInstall={directInstall} setDirectInstall={setDirectInstall} onClose={() => setSelected(null)} />}
     </section>
   );
 }
@@ -496,12 +561,13 @@ function Footer() {
 function Index() {
   const [query, setQuery] = useState("");
   const [industry, setIndustry] = useState<string | null>(null);
+  const [directInstall, setDirectInstall] = useState(false);
   return (
     <div id="top" className="min-h-screen bg-background">
       <Header />
       <Hero />
       <SearchSection query={query} setQuery={setQuery} industry={industry} setIndustry={setIndustry} />
-      <AgentHall query={query} industry={industry} />
+      <AgentHall query={query} industry={industry} directInstall={directInstall} setDirectInstall={setDirectInstall} />
       <ComboSection />
       <InstallerSection />
       <WhyBand />
