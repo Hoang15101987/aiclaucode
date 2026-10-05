@@ -1,0 +1,5 @@
+- [ ] Thu nhỏ ảnh bìa và đổi định vị thành “Tuyển Nhân sự AI”
+- [ ] Dùng ảnh người dùng tải lên cho 8 hồ sơ nhân sự
+- [ ] Thêm tên, chuyên môn, lựa chọn ChatGPT/Claude và giá 299k–999k
+- [ ] Thêm Combo Xây Kênh và Combo Sale giá 999k
+- [ ] Kiểm tra giao diện máy tính, điện thoại và trạng thái trang
