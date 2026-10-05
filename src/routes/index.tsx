@@ -24,6 +24,7 @@ import thaoVyAsset from "@/assets/staff/thao-vy.jpg.asset.json";
 import ngocMaiAsset from "@/assets/staff/ngoc-mai.jpg.asset.json";
 import haMyAsset from "@/assets/staff/ha-my.jpg.asset.json";
 import thanhTrucAsset from "@/assets/staff/thanh-truc.jpg.asset.json";
+import installerAsset from "@/assets/nguoi-cai-agent.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -172,6 +173,7 @@ function Header() {
           <a href="#nganh-nghe" className="transition-colors hover:text-primary">Ngành nghề</a>
           <a href="#nhan-su" className="transition-colors hover:text-primary">Nhân sự AI</a>
           <a href="#combo" className="transition-colors hover:text-primary">Combo 999K</a>
+          <a href="#nguoi-cai" className="transition-colors hover:text-primary">Người cài</a>
         </nav>
         <Button asChild className="rounded-full px-5">
           <a href="#nhan-su">Tuyển ngay</a>
@@ -417,6 +419,45 @@ function ComboSection() {
   );
 }
 
+function InstallerSection() {
+  const steps = [
+    { title: "Gửi yêu cầu tuyển", desc: "Chọn nhân sự AI hoặc combo phù hợp với công việc của bạn." },
+    { title: "Tư vấn và chốt hồ sơ", desc: "Đối chiếu ngành nghề và nền tảng cần dùng: ChatGPT hoặc Claude." },
+    { title: "Người cài Agent triển khai", desc: "Cài đặt, kết nối dữ liệu và nạp kịch bản làm việc cho từng nhân sự." },
+    { title: "Bàn giao trong 24 giờ", desc: "Nhân sự bắt đầu làm việc, kèm hướng dẫn sử dụng ngắn gọn." },
+  ];
+  return (
+    <section id="nguoi-cai" className="bg-band-cream px-4 py-14 sm:px-6 sm:py-16">
+      <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+        <div className="relative">
+          <div className="overflow-hidden rounded-lg border border-border shadow-md">
+            <img src={installerAsset.url} alt="Người cài Agent trực tiếp thiết lập nhân sự AI" className="aspect-[4/5] w-full object-cover" />
+          </div>
+          <p className="absolute bottom-3 left-3 rounded-full bg-primary px-4 py-1 text-xs font-bold uppercase tracking-wide text-primary-foreground shadow">Người cài Agent</p>
+        </div>
+        <div>
+          <p className="font-script text-3xl text-primary">Giới thiệu ngắn</p>
+          <h2 className="mt-1 font-display text-3xl font-bold text-foreground sm:text-4xl">CÓ NGƯỜI CÀI LO TỪ A ĐẾN Z</h2>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+            Mỗi nhân sự AI đều do người cài Agent trực tiếp thiết lập: chọn đúng nền tảng ChatGPT hoặc Claude, nạp kịch bản theo ngành và chạy thử trước khi bàn giao. Bạn chỉ cần tuyển và nhận kết quả, phần cài đặt đã có người lo.
+          </p>
+          <ol className="mt-6 space-y-3">
+            {steps.map((step, index) => (
+              <li key={step.title} className="flex items-start gap-3 rounded-lg border border-border bg-card p-4">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gold font-display text-sm font-black text-gold-foreground">{index + 1}</span>
+                <div>
+                  <p className="text-sm font-bold text-foreground">{step.title}</p>
+                  <p className="mt-0.5 text-sm text-muted-foreground">{step.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function WhyBand() {
   const stats = [
     { icon: Clock, title: "Làm việc 24/7" },
@@ -462,6 +503,7 @@ function Index() {
       <SearchSection query={query} setQuery={setQuery} industry={industry} setIndustry={setIndustry} />
       <AgentHall query={query} industry={industry} />
       <ComboSection />
+      <InstallerSection />
       <WhyBand />
       <Footer />
     </div>
