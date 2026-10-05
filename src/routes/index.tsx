@@ -250,16 +250,18 @@ function AgentHall({ query, industry }: { query: string; industry: string | null
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {filtered.map((agent) => (
             <article key={agent.id} className="group flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10">
-              <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+              <div className="relative aspect-[3/4] overflow-hidden bg-muted">
                 <img src={agent.image} alt={`${agent.name} – ${agent.role}`} width={720} height={960} loading="lazy" className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
-                <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold text-primary shadow-sm backdrop-blur">
+                <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-background/85 px-3 py-1 text-xs font-semibold text-primary shadow-sm backdrop-blur">
                   <span className="h-2 w-2 rounded-full bg-gold" /> Sẵn sàng làm việc
                 </span>
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/85 via-background/55 to-transparent p-4 pt-12 backdrop-blur-md">
+                  <p className="text-xs font-semibold uppercase text-gold">{agent.role}</p>
+                  <h3 className="mt-0.5 font-display text-2xl font-bold text-foreground drop-shadow-sm">{agent.name}</h3>
+                  <p className="mt-0.5 text-sm font-medium text-primary">{agent.specialty}</p>
+                </div>
               </div>
               <div className="flex flex-1 flex-col p-5">
-                <p className="text-xs font-semibold uppercase text-gold">{agent.role}</p>
-                <h3 className="mt-1 font-display text-2xl font-bold text-foreground">{agent.name}</h3>
-                <p className="mt-1 text-sm font-medium text-primary">{agent.specialty}</p>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{agent.description}</p>
                 <ul className="mt-4 space-y-1.5">
                   {agent.features.map((feature) => (
