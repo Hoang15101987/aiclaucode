@@ -391,7 +391,15 @@ function ComboSection() {
             const Icon = combo.icon;
             return (
               <article key={combo.title} className="rounded-lg border border-band-red-foreground/20 bg-band-red-foreground/10 p-7">
-                <div className="flex items-start justify-between gap-4">
+                <div className="grid grid-cols-3 gap-1.5 overflow-hidden rounded-md border border-band-red-foreground/25 bg-band-red-foreground/10 p-1.5">
+                  {combo.members.map((member) => (
+                    <img key={member.name} src={member.image} alt={member.name} loading="lazy" className="aspect-[3/4] w-full rounded-sm object-cover object-top" />
+                  ))}
+                </div>
+                <p className="mt-2 text-center text-xs font-semibold uppercase tracking-wide text-band-red-foreground/70">
+                  {combo.members.map((member) => member.name).join(" · ")}
+                </p>
+                <div className="mt-5 flex items-start justify-between gap-4">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gold text-gold-foreground"><Icon className="h-6 w-6" /></div>
                   <div className="text-right"><p className="text-xs text-band-red-foreground/70">Trọn gói chỉ</p><p className="font-display text-3xl font-black text-gold">999.000đ</p></div>
                 </div>
