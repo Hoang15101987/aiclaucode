@@ -11,10 +11,11 @@ import {
   ShoppingBag,
   Sparkles,
   Wallet,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import coverAsset from "@/assets/agent-cover.png.asset.json";
+import coverAsset from "@/assets/cover.png.asset.json";
 import anNhienAsset from "@/assets/staff/an-nhien.jpg.asset.json";
 import minhAnhAsset from "@/assets/staff/minh-anh.jpg.asset.json";
 import linhChiAsset from "@/assets/staff/linh-chi.jpg.asset.json";
@@ -142,7 +143,7 @@ const AGENTS: AgentProfile[] = [
     specialty: "Giải đáp · Tra cứu · Chăm sóc sau bán",
     description: "Phản hồi khách nhanh chóng, tra cứu thông tin và chăm sóc sau bán như một nhân sự trực tuyến.",
     features: ["Phản hồi tức thì", "Tra cứu đơn và nhắc lịch", "Chăm sóc sau bán định kỳ"],
-    price: "799.000đ",
+    price: "299.000đ",
     industries: ["Thời trang", "Nhà hàng – F&B", "Sức khỏe", "Bất động sản"],
     image: haMyAsset.url,
   },
@@ -165,7 +166,7 @@ function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <a href="#top" className="flex items-baseline gap-2">
           <span className="font-script text-3xl leading-none text-primary">Thương Mai</span>
-          <span className="hidden font-display text-base font-bold text-foreground uppercase sm:inline">Tuyển Nhân sự AI</span>
+          <span className="hidden font-display text-base font-bold uppercase text-foreground sm:inline">Tuyển Nhân sự AI</span>
         </a>
         <nav className="hidden items-center gap-8 text-sm font-medium text-muted-foreground md:flex">
           <a href="#nganh-nghe" className="transition-colors hover:text-primary">Ngành nghề</a>
@@ -180,6 +181,27 @@ function Header() {
   );
 }
 
+function Hero() {
+  return (
+    <section className="bg-band-cream px-4 py-5 sm:px-6 sm:py-7">
+      <div className="relative mx-auto max-w-5xl overflow-hidden rounded-lg border border-border shadow-md">
+        <img
+          src={coverAsset.url}
+          alt="Nhân Sự Agent – Quên Ăn Quên Ngủ Vì Sếp"
+          className="block max-h-[460px] w-full object-cover"
+        />
+        {/* Lớp phủ tan biến phía trên để chữ nổi bật */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-background/85 via-background/40 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 flex justify-center pb-4 sm:pb-5">
+          <p className="rounded-full bg-primary px-5 py-1.5 font-display text-sm font-black uppercase tracking-wide text-primary-foreground shadow-lg sm:text-base">
+            Tuyển Nhân sự AI · Làm việc 24/7 · Chỉ từ 299K
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function SearchSection({ query, setQuery, industry, setIndustry }: {
   query: string;
   setQuery: (value: string) => void;
@@ -189,8 +211,7 @@ function SearchSection({ query, setQuery, industry, setIndustry }: {
   return (
     <section id="nganh-nghe" className="border-y border-border/60 bg-card">
       <div className="mx-auto max-w-4xl px-4 py-10 text-center sm:px-6 sm:py-12">
-        <p className="font-script text-3xl text-primary">Đúng người, đúng chuyên môn</p>
-        <h2 className="mt-1 font-display text-3xl font-bold text-foreground sm:text-4xl">Tìm nhân sự AI theo ngành nghề</h2>
+        <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">Tìm nhân sự AI theo ngành nghề</h2>
         <div className="mt-7 flex items-center gap-3 rounded-full border border-border bg-background px-5 py-3 shadow-sm focus-within:border-primary/60">
           <Search className="h-5 w-5 shrink-0 text-muted-foreground" />
           <input
@@ -223,7 +244,64 @@ function SearchSection({ query, setQuery, industry, setIndustry }: {
   );
 }
 
+function AgentDetail({ agent, onClose }: { agent: AgentProfile; onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-foreground/60 p-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Hồ sơ ${agent.name}`}
+      onClick={onClose}
+    >
+      <div
+        className="relative grid w-full max-w-3xl overflow-hidden rounded-lg bg-card shadow-2xl md:grid-cols-2"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Đóng"
+          className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-background/85 text-foreground shadow-md backdrop-blur transition-colors hover:bg-background"
+        >
+          <X className="h-5 w-5" />
+        </button>
+        <div className="relative max-h-[320px] overflow-hidden bg-muted md:max-h-none">
+          <img src={agent.image} alt={`${agent.name} – ${agent.role}`} className="h-full w-full object-cover object-top" />
+        </div>
+        <div className="flex flex-col p-6 sm:p-8">
+          <p className="text-xs font-bold uppercase tracking-wider text-gold">{agent.role}</p>
+          <h3 className="mt-1 font-display text-3xl font-black text-foreground">{agent.name}</h3>
+          <p className="mt-1 text-sm font-semibold text-primary">{agent.specialty}</p>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{agent.description}</p>
+          <ul className="mt-4 space-y-2">
+            {agent.features.map((feature) => (
+              <li key={feature} className="flex items-start gap-2 text-sm font-medium text-foreground">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />{feature}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5">
+            <p className="text-xs font-medium text-muted-foreground">Chạy trên nền tảng</p>
+            <div className="mt-2 flex gap-2">
+              <span className="inline-flex items-center gap-1 rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1 text-xs font-semibold text-primary"><Bot className="h-3.5 w-3.5" />ChatGPT</span>
+              <span className="inline-flex items-center gap-1 rounded-md border border-gold/60 bg-gold/10 px-2.5 py-1 text-xs font-semibold text-foreground"><Sparkles className="h-3.5 w-3.5 text-gold" />Claude</span>
+            </div>
+          </div>
+          <div className="mt-auto flex items-end justify-between gap-3 pt-6">
+            <div>
+              <p className="text-xs text-muted-foreground">Phí tuyển dụng</p>
+              <p className="font-display text-2xl font-black text-primary">{agent.price}</p>
+            </div>
+            <Button className="rounded-full">Tuyển ngay<ArrowRight className="h-4 w-4" /></Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AgentHall({ query, industry }: { query: string; industry: string | null }) {
+  const [selected, setSelected] = useState<AgentProfile | null>(null);
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     return AGENTS.filter((agent) => {
@@ -238,18 +316,19 @@ function AgentHall({ query, industry }: { query: string; industry: string | null
   return (
     <section id="nhan-su" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
       <div className="text-center">
-        <p className="font-script text-3xl text-primary">Đội ngũ sẵn sàng</p>
-        <h2 className="mt-1 font-display text-3xl font-bold text-foreground sm:text-4xl">Tuyển nhân sự AI theo chuyên môn</h2>
-        <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
-          Mỗi nhân sự có chuyên môn riêng, làm việc trên ChatGPT hoặc Claude và được bàn giao trong 24 giờ.
-        </p>
+        <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">Tuyển nhân sự AI theo chuyên môn</h2>
+        <p className="mx-auto mt-3 max-w-xl font-semibold text-primary">Bấm vào từng nhân sự để xem hồ sơ chi tiết</p>
       </div>
       {filtered.length === 0 ? (
         <p className="mt-12 text-center text-muted-foreground">Không tìm thấy nhân sự phù hợp — hãy thử từ khóa khác.</p>
       ) : (
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {filtered.map((agent) => (
-            <article key={agent.id} className="group flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10">
+            <article
+              key={agent.id}
+              className="group flex min-w-0 cursor-pointer flex-col overflow-hidden rounded-lg border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10"
+              onClick={() => setSelected(agent)}
+            >
               <div className="relative aspect-[3/4] overflow-hidden bg-muted">
                 <img src={agent.image} alt={`${agent.name} – ${agent.role}`} width={720} height={960} loading="lazy" className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
                 <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-background/85 px-3 py-1 text-xs font-semibold text-primary shadow-sm backdrop-blur">
@@ -261,50 +340,32 @@ function AgentHall({ query, industry }: { query: string; industry: string | null
                   <p className="mt-0.5 text-sm font-medium text-primary">{agent.specialty}</p>
                 </div>
               </div>
-              <div className="flex flex-1 flex-col p-5">
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{agent.description}</p>
-                <ul className="mt-4 space-y-1.5">
-                  {agent.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-sm text-foreground">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />{feature}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-5 border-t border-border pt-4">
-                  <p className="text-xs font-medium text-muted-foreground">Chọn nền tảng vận hành</p>
-                  <div className="mt-2 flex gap-2">
-                    <span className="inline-flex items-center gap-1 rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1 text-xs font-semibold text-primary"><Bot className="h-3.5 w-3.5" />ChatGPT</span>
-                    <span className="inline-flex items-center gap-1 rounded-md border border-gold/60 bg-gold/10 px-2.5 py-1 text-xs font-semibold text-foreground"><Sparkles className="h-3.5 w-3.5 text-gold" />Claude</span>
-                  </div>
+              <div className="flex items-end justify-between gap-3 p-5">
+                <div>
+                  <p className="text-xs text-muted-foreground">Phí tuyển dụng</p>
+                  <p className="font-display text-xl font-black text-primary">{agent.price}</p>
                 </div>
-                <div className="mt-auto flex items-end justify-between gap-3 pt-5">
-                  <div>
-                    <p className="text-xs text-muted-foreground">Phí tuyển dụng</p>
-                    <p className="font-display text-xl font-bold text-primary">{agent.price}</p>
-                  </div>
-                  <Button size="sm" className="rounded-full">Tuyển ngay<ArrowRight className="h-4 w-4" /></Button>
-                </div>
+                <Button size="sm" variant="outline" className="rounded-full">Xem hồ sơ<ArrowRight className="h-4 w-4" /></Button>
               </div>
             </article>
           ))}
         </div>
       )}
+      {selected && <AgentDetail agent={selected} onClose={() => setSelected(null)} />}
     </section>
   );
 }
 
 function ComboSection() {
-  const combos: { title: string; icon: LucideIcon; description: string; includes: string[] }[] = [
+  const combos: { title: string; icon: LucideIcon; includes: string[] }[] = [
     {
       title: "Combo Xây Kênh",
       icon: Sparkles,
-      description: "Bộ nhân sự AI giúp bạn xây và vận hành kênh nội dung từ ý tưởng đến xuất bản.",
       includes: ["Chiến lược nội dung 30 ngày", "Kịch bản video theo ngành", "Hình ảnh và video đồng bộ"],
     },
     {
       title: "Combo Sale",
       icon: ShoppingBag,
-      description: "Bộ nhân sự AI theo sát hành trình bán hàng, từ tư vấn đến chăm sóc sau mua.",
       includes: ["Tư vấn và chốt đơn 24/7", "Chăm sóc khách hàng tự động", "Nhắn tin remarketing đúng lịch"],
     },
   ];
@@ -313,7 +374,7 @@ function ComboSection() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <div className="text-center">
           <p className="font-script text-3xl text-gold">Hai combo chủ chốt</p>
-          <h2 className="mt-1 font-display text-3xl font-bold sm:text-4xl">TUYỂ CẢ ĐỘI, TỐI ƯU CHI PHÍ</h2>
+          <h2 className="mt-1 font-display text-3xl font-bold sm:text-4xl">TUYỂN CẢ ĐỘI, TỐI ƯU CHI PHÍ</h2>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {combos.map((combo) => {
@@ -325,9 +386,8 @@ function ComboSection() {
                   <div className="text-right"><p className="text-xs text-band-red-foreground/70">Trọn gói chỉ</p><p className="font-display text-3xl font-black text-gold">999.000đ</p></div>
                 </div>
                 <h3 className="mt-5 font-display text-2xl font-bold">{combo.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-band-red-foreground/80">{combo.description}</p>
-                <ul className="mt-5 space-y-2">
-                  {combo.includes.map((item) => <li key={item} className="flex items-center gap-2 text-sm"><Check className="h-4 w-4 shrink-0 text-gold" />{item}</li>)}
+                <ul className="mt-4 space-y-2">
+                  {combo.includes.map((item) => <li key={item} className="flex items-center gap-2 text-sm font-medium"><Check className="h-4 w-4 shrink-0 text-gold" />{item}</li>)}
                 </ul>
                 <Button asChild variant="secondary" className="mt-6 w-full rounded-full"><a href="#nhan-su">Chọn combo này<ArrowRight className="h-4 w-4" /></a></Button>
               </article>
@@ -341,21 +401,20 @@ function ComboSection() {
 
 function WhyBand() {
   const stats = [
-    { icon: Clock, title: "Làm việc 24/7", desc: "Luôn sẵn sàng xử lý công việc, kể cả ngoài giờ hành chính" },
-    { icon: ShieldCheck, title: "Bàn giao trong 24 giờ", desc: "Cài đặt, cấu hình và hướng dẫn vận hành rõ ràng" },
-    { icon: Wallet, title: "Từ 299K", desc: "Chi phí minh bạch, phù hợp cả cá nhân lẫn doanh nghiệp" },
-    { icon: Bot, title: "2 nền tảng", desc: "Linh hoạt lựa chọn ChatGPT hoặc Claude theo nhu cầu" },
+    { icon: Clock, title: "Làm việc 24/7" },
+    { icon: ShieldCheck, title: "Bàn giao trong 24 giờ" },
+    { icon: Wallet, title: "Chỉ từ 299K" },
+    { icon: Bot, title: "ChatGPT hoặc Claude" },
   ];
   return (
     <section className="bg-band-gold py-14 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="text-center"><p className="font-script text-3xl text-band-gold-foreground/80">Vì sao nên tuyển nhân sự AI</p><h2 className="mt-1 font-display text-3xl font-bold text-band-gold-foreground sm:text-4xl">ĐỘI NGŨ GỌN HƠN, CÔNG VIỆC NHANH HƠN</h2></div>
+        <div className="text-center"><h2 className="font-display text-3xl font-bold text-band-gold-foreground sm:text-4xl">ĐỘI NGŨ GỌN HƠN, CÔNG VIỆC NHANH HƠN</h2></div>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map(({ icon: Icon, title, desc }) => (
+          {stats.map(({ icon: Icon, title }) => (
             <div key={title} className="rounded-lg border border-band-gold-foreground/15 bg-background/40 p-6 text-center">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground"><Icon className="h-6 w-6" /></div>
               <h3 className="mt-4 font-display text-xl font-bold text-band-gold-foreground">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-band-gold-foreground/80">{desc}</p>
             </div>
           ))}
         </div>
@@ -369,7 +428,6 @@ function Footer() {
     <footer className="bg-foreground py-10 text-background">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-4 text-center sm:px-6">
         <p className="flex items-baseline gap-2"><span className="font-script text-3xl text-gold">Thương Mai</span><span className="font-display text-base font-bold uppercase">Tuyển Nhân sự AI</span></p>
-        <p className="max-w-lg text-sm text-background/70">Nơi bạn tìm và tuyển đúng nhân sự AI cho từng công việc — làm việc 24/7 trên ChatGPT hoặc Claude.</p>
         <p className="text-xs text-background/50">© 2026 Tuyển Nhân sự AI. All rights reserved.</p>
       </div>
     </footer>
@@ -382,11 +440,7 @@ function Index() {
   return (
     <div id="top" className="min-h-screen bg-background">
       <Header />
-      <section className="bg-band-cream px-4 py-5 sm:px-6 sm:py-7">
-        <div className="mx-auto max-w-5xl overflow-hidden rounded-lg border border-border bg-card shadow-md">
-          <img src={coverAsset.url} alt="Tuyển Nhân sự AI – Nghề giá cao, không bao giờ lỗi thời" className="block max-h-[420px] w-full object-contain" />
-        </div>
-      </section>
+      <Hero />
       <SearchSection query={query} setQuery={setQuery} industry={industry} setIndustry={setIndustry} />
       <AgentHall query={query} industry={industry} />
       <ComboSection />
